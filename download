@@ -1,0 +1,19 @@
+# 1. Klasör listelemeyi kapat (Güvenlik için)
+Options -Indexes
+
+# 2. Sadece baglan.php dosyasını dış dünyaya kapat
+<Files "baglan.php">
+    Order allow,deny
+    Deny from all
+</Files>
+
+# 3. api.php ve simulator.php dosyalarına erişime izin ver
+<FilesMatch "^(api\.php|simulator\.php|sepet\.php)$">
+    Order deny,allow
+    Allow from all
+</FilesMatch>
+
+# 4. HTTPS (SSL) Yönlendirmesi (Karma içerik hatasını önlemek için)
+RewriteEngine On
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
